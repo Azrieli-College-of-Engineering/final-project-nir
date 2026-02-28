@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: haproxy:1.9
+    container_name: smuggling-haproxy
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      - backend
+    networks:
+      - smuggling-net
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: smuggling-backend
+    expose:
+      - "5000"
+    networks:
+      - smuggling-net
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=development
+
+networks:
+  smuggling-net:
+    driver: bridge
