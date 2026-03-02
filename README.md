@@ -37,7 +37,7 @@ Transfer-Encoding: chunked
 0
 
 G
-
+```
 The Frontend forwarded the entire block (6 bytes). The Backend read the 0, terminated the request processing, and left the letter G in the buffer.
 When a victim sent a legitimate GET / HTTP/1.1 request immediately afterward on the same connection, the back-end server appended the G, interpreting the request as GGET / HTTP/1.1.
 Result: The server returned a 405 Method Not Allowed error to the victim, successfully proving that one user's traffic can directly compromise another's.
